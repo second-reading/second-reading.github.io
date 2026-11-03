@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FATAL EXCEPTION</title>
+<meta name="description" content="A lost 1993 arcade game, full of bugs. Fix them to finish it, and find out why it was never released. A story game around a 16-bit-style shoot 'em up.">
+<meta property="og:title" content="FATAL EXCEPTION">
+<meta property="og:description" content="A lost 1993 arcade game, full of bugs. Fix them to finish it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://secondreading.games/fatal-exception/">
+<meta property="og:image" content="https://secondreading.games/fatal-exception/shots/title.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <span class="bar-title">FATAL EXCEPTION</span>
+    <nav aria-label="On this page">
+      <a href="#about">About</a>
+      <a href="#how">How it plays</a>
+      <a href="#shots">Screenshots</a>
+      <a href="#get">Get it</a>
+      <a href="../">Second Reading</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-text">
+      <h1 class="logo">FATAL<br>EXCEPTION</h1>
+      <p class="tagline">A lost 1993 arcade game, full of bugs. Fix them to finish it, and find out why it was never released.</p>
+      <p class="cta">
+        <!-- When the itch.io page is live: put its address in href, take out aria-disabled and the
+             "soon" class, and change the words to "Buy it on itch.io" (and the same in #get below). -->
+        <a class="btn soon" id="itch" href="#get" aria-disabled="true">Coming soon to itch.io</a>
+      </p>
+    </div>
+    <figure class="crt">
+      <img src="shots/title.png" width="640" height="480" alt="The title screen: FATAL EXCEPTION, INSERT COIN, copyright Ergodic Software 1993.">
+    </figure>
+  </div>
+</section>
+
+<section class="band" id="about">
+  <div class="wrap prose">
+    <h2>The game is broken. You're the one fixing it.</h2>
+    <p>Saturday morning, and a parcel you weren't expecting: an arcade board, a prototype from a company you've never heard of. Ergodic Software, 1993. It was never released. Nobody seems to know why.</p>
+    <p>You hook it up. It boots. It plays, for about five seconds, and then it crashes.</p>
+    <p>Every bug stops the game dead and shows you the line of code that broke it. Change it, run it, and play on, a stage further each time. And the further you get, the more you want to know: who made this, and why did they never finish it?</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="center">Play. Crash. Fix.</h2>
+    <ol class="steps">
+      <li>
+        <figure class="crt small"><img src="shots/stage1.png" width="640" height="480" loading="lazy" alt="Stage 1: the ship flies through a purple cave, shooting a wave of enemy fighters."></figure>
+        <h3><span>1</span> Play</h3>
+        <p>A proper 16-bit-style shoot 'em up: waves, bosses, power-ups, a high-score table.</p>
+      </li>
+      <li>
+        <figure class="crt small"><img src="shots/crash.png" width="797" height="614" loading="lazy" alt="The monitor, black, with a red error: FATAL EXCEPTION, SHIP OUT OF BOUNDS."></figure>
+        <h3><span>2</span> Crash</h3>
+        <p>Then something the game didn't expect happens, and the whole board falls over.</p>
+      </li>
+      <li>
+        <figure class="crt small"><img src="shots/fix.png" width="797" height="614" loading="lazy" alt="The debug monitor showing a few lines of simple code, one of them highlighted."></figure>
+        <h3><span>3</span> Fix</h3>
+        <p>Find the line that threw, change it, run it, and see if it flies. No coding knowledge needed: if you can spot what's wrong, you can fix it.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band" id="shots">
+  <div class="wrap">
+    <h2 class="center">Screenshots</h2>
+    <div class="gallery">
+      <a href="shots/bench.png" class="wide"><img src="shots/bench.png" width="1280" height="800" loading="lazy" alt="The workbench from above: the arcade board, a supergun, a USB flasher, a box of bits and a coffee, with the story told alongside."></a>
+      <a href="shots/boss1.png" class="crt-link"><img src="shots/boss1.png" width="640" height="480" loading="lazy" alt="Stage 1's boss, the Creek Tumbler, a pale cave snail, with its health bar along the bottom."></a>
+      <a href="shots/desert.png" class="crt-link"><img src="shots/desert.png" width="640" height="480" loading="lazy" alt="Stage 2, the desert at sunset: a wall of mines with a gap in the middle."></a>
+      <a href="shots/ice.png" class="crt-link"><img src="shots/ice.png" width="640" height="480" loading="lazy" alt="Stage 3, an ice cavern with icicles, and a band of colours sweeping across the screen."></a>
+      <a href="shots/stage1.png" class="crt-link"><img src="shots/stage1.png" width="640" height="480" loading="lazy" alt="Stage 1, the purple cave, mid-fight."></a>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="wrap two">
+    <div class="prose">
+      <h2>What's in it</h2>
+      <ul class="ticks">
+        <li>A story you play at your own pace, around a 16-bit-style shoot 'em up.</li>
+        <li>No coding knowledge needed: the code is how you play, not what it's about.</li>
+        <li>Hard enough for shmup fans, with an easy mode and a hands-free mode for everyone else.</li>
+        <li>An arcade mode once you've finished it: every stage, every bug fixed, for score.</li>
+        <li>An original acid house soundtrack, played live in your browser.</li>
+        <li>Plays in your browser. No install, no internet needed once it's loaded.</li>
+      </ul>
+    </div>
+    <aside class="floppy" aria-label="Size">
+      <div class="disk" aria-hidden="true"><span class="shutter"></span><span class="label">FATAL<br>EXCEPTION</span></div>
+      <p><strong>The whole game fits on a floppy disk.</strong> The story, the shooter, arcade mode and all of its music, in under 720K.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="band" id="get">
+  <div class="wrap prose center">
+    <h2>Get it</h2>
+    <p>FATAL EXCEPTION is coming to itch.io: play it in your browser there, or download it and open it on any computer with a web browser.</p>
+    <p class="cta"><a class="btn soon" href="#get" aria-disabled="true">Coming soon to itch.io</a></p>
+    <p class="small">Contains flashing lights (with a warning and a reduced-motion option) and references to drug culture.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>FATAL EXCEPTION is a <a href="../">Second Reading</a> game &middot; Fonts: VT323 and Press Start 2P, under the SIL Open Font License.</p>
+  </div>
+</footer>
+
+</body>
+</html>
