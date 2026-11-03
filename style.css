@@ -72,6 +72,9 @@ figcaption{font:400 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--dim);m
 .div .pic img{width:100%;aspect-ratio:7/4;object-fit:cover;image-rendering:pixelated;border:1px solid var(--rule);background:#000}
 .div .pic:hover img{border-color:var(--pen)}
 .div p{font-size:17px;color:var(--dim)}
+.div .also{font:400 11px/1.6 var(--mono);letter-spacing:.06em}
+.div .also a{color:var(--pen);text-underline-offset:3px}
+.div .also a:hover{color:var(--page)}
 
 .foot{background:var(--deep);border-top:1px solid var(--rule);padding:22px 0}
 .foot-in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
