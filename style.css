@@ -64,8 +64,8 @@ figcaption{font:400 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--dim);m
   text-decoration:none;color:var(--ink);background:var(--pen);padding:12px 16px}
 .more:hover{background:var(--page)}
 
-/* Diversions: the same contents lines, smaller. */
-#diversions{padding:0 0 88px}
+/* Daft Stuff: the same contents lines, smaller. */
+#daft-stuff{padding:0 0 88px}
 .divs{display:grid;grid-template-columns:repeat(2,1fr);gap:40px}
 .div .entry .title{font-size:26px}
 .div .pic{display:block;margin:16px 0 14px}
