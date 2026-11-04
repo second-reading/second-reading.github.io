@@ -1,6 +1,6 @@
 /* The "played" in the headline is a button: click it and a little breakout game takes over the
    page. Rows of blocks slide down from the top, a mouse-controlled paddle at the bottom, and a ball
-   that comes down from the top. It ends when you lose the ball, clear the blocks, or right-click
+   that comes in from the side, below them. It ends when you lose the ball, clear the blocks, or right-click
    (which quits straight back to the page). Escape and the Quit button, top right, quit too.
    Touch works: drag to move, tap to play again. */
 (() => {
@@ -9,6 +9,11 @@
 
   const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   const COLS = 10, ROWS = 6, SLIDE = 0.9;      // blocks per row, rows, seconds for the rows to slide in
+  const GAP = 4;                                 // between blocks, across and down
+  // The headline, printed across the blocks two rows at a time, "played" on the yellow ones as it
+  // is on the page. Knock out a block and its bit of the letters goes with it.
+  const SLOGAN = [{text: "You haven't", row: 0}, {text: 'played', row: 2, pen: true}, {text: 'this before.', row: 4}];
+  const bandOf = row => SLOGAN.find(b => row >= b.row && row < b.row + 2);
   const touchy = matchMedia('(pointer: coarse)').matches;      // a phone or tablet: no right-click
   let wrap, cv, cx, raf, state;
 
@@ -60,12 +65,16 @@
     const W = innerWidth, H = innerHeight, s = state;
     s.W = W; s.H = H;
     s.pad = Math.max(16, W * 0.06);
-    s.bw = (W - s.pad * 2) / COLS; s.bh = Math.max(14, Math.min(28, H * 0.035));
+    s.bw = (W - s.pad * 2) / COLS; s.bh = Math.max(14, Math.min(40, H * 0.045));
     s.top = Math.max(70, H * 0.12);
     s.pw = Math.max(70, Math.min(160, W * 0.14)); s.ph = 12;
     s.py = H - Math.max(48, H * 0.08);
     s.r = Math.max(6, Math.min(10, W * 0.008));
     s.speed = Math.max(320, Math.min(560, H * 0.75));      // pixels a second, before it speeds up
+    // The slogan's size: as big as two rows, or as fits across, whichever's smaller.
+    cx.font = '400 100px Gloock, Georgia, serif';
+    const widest = Math.max(...SLOGAN.map(b => cx.measureText(b.text).width));
+    s.font = Math.min((s.bh * 2 + GAP) * 0.95, 100 * (W - s.pad * 2) * 0.9 / widest);
   }
 
   function start(){
@@ -76,9 +85,10 @@
     for(let row = 0; row < ROWS; row++)
       for(let col = 0; col < COLS; col++)
         s.blocks.push({row, col, alive: true});
-    // The ball comes down from the top, a little to one side.
-    const a = (Math.random() < .5 ? -1 : 1) * (0.35 + Math.random() * 0.25);
-    s.bx = s.W / 2; s.by = 10; s.vx = Math.sin(a); s.vy = Math.cos(a);
+    // The ball comes in from one side, just below the blocks, heading down across the screen.
+    const dir = Math.random() < .5 ? 1 : -1, a = 0.6 + Math.random() * 0.25;
+    s.bx = dir > 0 ? -s.r : s.W + s.r; s.by = s.top + ROWS * (s.bh + GAP) + Math.max(30, s.H * 0.05);
+    s.vx = dir * Math.sin(a); s.vy = Math.cos(a);
     s.launch = SLIDE;      // the ball waits until the blocks are in
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(frame);
@@ -88,8 +98,8 @@
     // Each row slides down from above the screen to its place; lower rows land first.
     const k = Math.min(1, Math.max(0, (slide - (ROWS - 1 - b.row) * 0.08) / (SLIDE - (ROWS - 1) * 0.08)));
     const ease = 1 - Math.pow(1 - k, 3);
-    const y = s.top + b.row * (s.bh + 6);
-    return {x: s.pad + b.col * s.bw + 3, y: -s.bh + (y + s.bh) * ease, w: s.bw - 6, h: s.bh};
+    const y = s.top + b.row * (s.bh + GAP);
+    return {x: s.pad + b.col * s.bw + GAP / 2, y: -s.bh + (y + s.bh) * ease, w: s.bw - GAP, h: s.bh};
   };
 
   function frame(now){
@@ -108,8 +118,8 @@
     const n = Math.ceil(v * dt / (s.r * 0.8));
     for(let i = 0; i < n && !s.over; i++){
       s.bx += s.vx * v * dt / n; s.by += s.vy * v * dt / n;
-      if(s.bx < s.r){ s.bx = s.r; s.vx = Math.abs(s.vx); }
-      if(s.bx > s.W - s.r){ s.bx = s.W - s.r; s.vx = -Math.abs(s.vx); }
+      if(s.bx < s.r && s.vx < 0){ s.bx = s.r; s.vx = -s.vx; }
+      if(s.bx > s.W - s.r && s.vx > 0){ s.bx = s.W - s.r; s.vx = -s.vx; }
       if(s.by < s.r && s.vy < 0){ s.by = s.r; s.vy = Math.abs(s.vy); }
       // The paddle: where it hits sets the angle, like the original.
       const pl = s.px - s.pw / 2;
@@ -147,11 +157,20 @@
     cx.fillText('SCORE ' + String(s.score).padStart(4, '0'), s.pad, 24);
     cx.strokeStyle = rule; cx.lineWidth = 1;
     cx.beginPath(); cx.moveTo(s.pad, 52.5); cx.lineTo(s.W - s.pad, 52.5); cx.stroke();
-    const colours = [pen, pen, page, page, dim, dim];
+    cx.font = `400 ${s.font}px Gloock, Georgia, serif`;
+    cx.textAlign = 'center'; cx.textBaseline = 'middle';
     for(const b of s.blocks){
       if(!b.alive) continue;
-      const r = blockRect(s, b, slide);
-      cx.fillStyle = colours[b.row]; cx.fillRect(r.x, r.y, r.w, r.h);
+      const r = blockRect(s, b, slide), band = bandOf(b.row);
+      cx.fillStyle = band.pen ? pen : page; cx.fillRect(r.x, r.y, r.w, r.h);
+      // Its share of the slogan: the words drawn across the band, clipped to this block. They ride
+      // with the block's own row as it slides in.
+      const top = r.y - (b.row - band.row) * (s.bh + GAP);
+      cx.save();
+      cx.beginPath(); cx.rect(r.x, r.y, r.w, r.h); cx.clip();
+      cx.fillStyle = ink;
+      cx.fillText(band.text, s.W / 2, top + s.bh + GAP / 2 + s.font * 0.04);
+      cx.restore();
     }
     cx.fillStyle = page;
     cx.fillRect(s.px - s.pw / 2, s.py, s.pw, s.ph);
