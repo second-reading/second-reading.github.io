@@ -1,13 +1,15 @@
 /* The "played" in the headline is a button: click it and a little breakout game takes over the
    page. Rows of blocks slide down from the top, a mouse-controlled paddle at the bottom, and a ball
    that comes down from the top. It ends when you lose the ball, clear the blocks, or right-click
-   (which quits straight back to the page). Escape quits too. Touch works: drag to move. */
+   (which quits straight back to the page). Escape and the Quit button, top right, quit too.
+   Touch works: drag to move, tap to play again. */
 (() => {
   const btn = document.querySelector('.play-mark');
   if(!btn) return;
 
   const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   const COLS = 10, ROWS = 6, SLIDE = 0.9;      // blocks per row, rows, seconds for the rows to slide in
+  const touchy = matchMedia('(pointer: coarse)').matches;      // a phone or tablet: no right-click
   let wrap, cv, cx, raf, state;
 
   function open(){
@@ -17,6 +19,11 @@
     wrap.setAttribute('aria-label', 'Breakout. Move the mouse to steer the paddle. Right-click or Escape to quit.');
     cv = document.createElement('canvas');
     wrap.appendChild(cv);
+    // A Quit button, top right, for anyone without a right-click (or who'd rather not).
+    const q = document.createElement('button');
+    q.type = 'button'; q.className = 'breakout-quit'; q.textContent = 'Quit \u00d7';
+    q.addEventListener('click', e => { e.stopPropagation(); close(); });
+    wrap.appendChild(q);
     document.body.appendChild(wrap);
     document.body.style.overflow = 'hidden';
     cx = cv.getContext('2d');
@@ -138,8 +145,6 @@
     cx.textBaseline = 'top';
     cx.fillStyle = pen; cx.textAlign = 'left';
     cx.fillText('SCORE ' + String(s.score).padStart(4, '0'), s.pad, 24);
-    cx.fillStyle = dim; cx.textAlign = 'right';
-    cx.fillText('RIGHT-CLICK TO QUIT', s.W - s.pad, 24);
     cx.strokeStyle = rule; cx.lineWidth = 1;
     cx.beginPath(); cx.moveTo(s.pad, 52.5); cx.lineTo(s.W - s.pad, 52.5); cx.stroke();
     const colours = [pen, pen, page, page, dim, dim];
@@ -164,12 +169,16 @@
       cx.fillStyle = pen;
       cx.fillText('SCORE ' + s.score, s.W / 2, s.H / 2 + 40);
       cx.fillStyle = dim;
-      cx.fillText('CLICK TO PLAY AGAIN  ·  RIGHT-CLICK OR ESC TO GO BACK', s.W / 2, s.H / 2 + 74);
+      cx.fillText(touchy ? 'TAP TO PLAY AGAIN' : 'CLICK TO PLAY AGAIN  ·  RIGHT-CLICK OR ESC TO GO BACK', s.W / 2, s.H / 2 + 74);
     }
   }
 
   function aim(e){ if(state) state.px = Math.max(state.pw / 2, Math.min(state.W - state.pw / 2, e.clientX)); }
-  function touch(e){ e.preventDefault(); aim(e.touches[0]); }
+  function touch(e){
+    if(e.target.closest('.breakout-quit')) return;      // let the Quit button have its tap
+    e.preventDefault(); aim(e.touches[0]);
+    if(e.type === 'touchstart' && state && state.over) start();
+  }
   function click(){ if(state && state.over) start(); }
   function quit(e){ e.preventDefault(); close(); }
   function key(e){

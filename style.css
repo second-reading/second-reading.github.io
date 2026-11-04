@@ -97,3 +97,6 @@ figcaption{font:400 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--dim);m
 .play-mark:focus-visible{outline:2px solid var(--page);outline-offset:4px}
 .breakout{position:fixed;inset:0;z-index:100;background:var(--green);cursor:none;touch-action:none}
 .breakout canvas{display:block}
+.breakout-quit{position:absolute;top:14px;right:max(16px,6vw);font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--dim);background:none;border:1px solid var(--rule);padding:8px 10px;cursor:pointer}
+.breakout-quit:hover,.breakout-quit:focus-visible{color:var(--ink);background:var(--pen);border-color:var(--pen);outline:none}
