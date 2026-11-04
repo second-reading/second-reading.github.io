@@ -90,3 +90,10 @@ figcaption{font:400 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--dim);m
   .entry .status{flex-basis:100%;order:3}
   .entry .num{min-width:0}
 }
+
+/* "played" is a button: it opens a game of breakout (play.js). */
+.play-mark{font:inherit;color:inherit;letter-spacing:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer}
+.play-mark:hover{text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.1em}
+.play-mark:focus-visible{outline:2px solid var(--page);outline-offset:4px}
+.breakout{position:fixed;inset:0;z-index:100;background:var(--green);cursor:none;touch-action:none}
+.breakout canvas{display:block}
