@@ -4,7 +4,7 @@
 @font-face{font-family:'Press Start 2P';font-display:swap;src:url(fonts/press-start-2p-latin-400-normal.woff2) format('woff2')}
 
 :root{
-  --blue:#0055aa; --deep:#00224a; --white:#ffffff; --orange:#ff8800; --dim:#a9c6ea;
+  --blue:#0055aa; --deep:#00224a; --white:#ffffff; --orange:#ff8800; --dim:#bcd3ef;
   --crt:#0b0b0f; --bezel:#2b2d33;
 }
 *{box-sizing:border-box}
