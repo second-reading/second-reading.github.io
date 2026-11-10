@@ -38,7 +38,9 @@ section{padding:64px 0}
   -webkit-background-clip:text;background-clip:text;color:transparent;
   filter:drop-shadow(4px 4px 0 #2a0a3a)}
 .tagline{font-size:28px;margin:0 0 28px}
-.cta{margin:0}
+.cta{margin:0;display:flex;flex-wrap:wrap;gap:14px}
+.center .cta{justify-content:center}
+.facts{margin:22px 0 0;font-size:20px;color:var(--dim)}
 .btn{display:inline-block;font-family:'Press Start 2P',monospace;font-size:14px;text-decoration:none;
   background:var(--orange);color:#000;padding:14px 18px;border:2px solid #000;box-shadow:4px 4px 0 rgba(0,0,0,.45)}
 .btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 rgba(0,0,0,.45)}
@@ -49,6 +51,7 @@ section{padding:64px 0}
 .crt{margin:0;background:var(--bezel);padding:14px;border-radius:14px;
   box-shadow:0 0 0 3px var(--orange),0 0 28px rgba(255,136,0,.35),6px 8px 0 rgba(0,0,0,.35)}
 .crt img{border-radius:8px;image-rendering:pixelated;width:100%;background:var(--crt)}
+.crt video{display:block;width:100%;height:auto;aspect-ratio:4/3;border-radius:8px;background:var(--crt)}
 .crt.small{padding:8px;border-radius:10px;box-shadow:0 0 0 2px var(--orange),5px 6px 0 rgba(0,0,0,.35)}
 .crt.small img{aspect-ratio:4/3;object-fit:cover;border-radius:6px}
 /* The browser shot is a strip off the top of the page: the rest of the page is white. */
@@ -106,3 +109,14 @@ section{padding:64px 0}
   .btn{font-size:12px}
 }
 .foot a{color:var(--blue)}
+
+/* The press kit. */
+.kit{max-width:860px;margin:0 auto}
+.kit h2{margin-top:48px}
+.kit h2:first-child{margin-top:0}
+.kit dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 24px;margin:0}
+.kit dt{color:var(--dim)}
+.kit dd{margin:0}
+.kit .gallery{margin-top:8px}
+.kit ul{padding-left:22px;margin:0 0 16px}
+@media (max-width:560px){ .kit dl{grid-template-columns:1fr;gap:0} .kit dd{margin:0 0 10px} }

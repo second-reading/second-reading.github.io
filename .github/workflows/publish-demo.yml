@@ -1,0 +1,52 @@
+# One click to put Fatal Exception's demo on the site, or take it down again:
+# Actions tab, "Publish the demo", Run workflow.
+# It builds the demo from the game's (private) repo and commits it to fatal-exception/demo/.
+# Needs one secret in this repo, GAME_REPO_TOKEN: a fine-grained personal access token that can
+# read the contents of pdobson1/fatal-exception and nothing else (README.md has the steps).
+name: Publish the demo
+on:
+  workflow_dispatch:
+    inputs:
+      what:
+        description: Put the demo up, or take it down
+        type: choice
+        options: [publish, take down]
+        default: publish
+      ref:
+        description: The game repo's branch, tag or commit to build
+        default: main
+permissions:
+  contents: write
+concurrency: publish-demo
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the game
+        if: inputs.what == 'publish'
+        uses: actions/checkout@v4
+        with:
+          repository: pdobson1/fatal-exception
+          ref: ${{ inputs.ref }}
+          token: ${{ secrets.GAME_REPO_TOKEN }}
+          path: .game
+      - name: Build the demo and put it in place
+        if: inputs.what == 'publish'
+        run: |
+          sh .game/tools/build.sh --demo
+          echo "GAME_SHA=$(git -C .game rev-parse --short HEAD)" >> "$GITHUB_ENV"
+          sh tools/publish-demo.sh .game/dist
+          rm -rf .game
+      - name: Take the demo down
+        if: inputs.what == 'take down'
+        run: sh tools/publish-demo.sh --remove
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git commit -m "${{ inputs.what == 'publish' && format('Publish the demo (game at {0})', env.GAME_SHA) || 'Take the demo down' }}"
+          git push
