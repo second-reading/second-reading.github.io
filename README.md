@@ -45,7 +45,7 @@ the game's `js/save.js`), so that page should exist first.
 
 On Fatal Exception's page, under Get it: a visitor's address is checked in the page (the
 script at its foot), then emailed to hello@secondreading.games by FormSubmit (formsubmit.co), a
-free form-to-email relay; the mailing list is whatever's tagged in that inbox. The first address
-ever sent makes FormSubmit email hello@ an activation link: click it once, or nothing arrives.
-That email also gives a random string to use in place of the address in the form's `action`,
-which keeps the address away from scrapers. FormSubmit keeps each submission for 30 days.
+free form-to-email relay; the mailing list is whatever's tagged in that inbox. It's activated
+(FormSubmit emailed hello@ a link, once), and the form's `action` uses the random string that
+email gave in place of the address, to keep the address away from scrapers; a different inbox
+would need activating the same way, and its own string. FormSubmit keeps each submission for 30 days.
