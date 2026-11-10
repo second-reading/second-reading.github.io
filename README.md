@@ -4,13 +4,13 @@ The Second Reading Games website, served by GitHub Pages from this repo (`CNAME`
 domain). Plain HTML and CSS, no build step.
 
 - `index.html`, `style.css`: the studio's front page.
-- `fatal-exception/`: Fatal Exception's promo page. Its source is `site/` in the (private)
-  fatal-exception repo, where `tools/site-shots.js` retakes the screenshots; copy it here after
-  changing it, keeping the link back to the front page and the absolute `og:` addresses.
+- `fatal-exception/`: Fatal Exception's promo page, edited here (it used to be `site/` in the
+  game's repo). Keep the link back to the front page and the absolute `og:` addresses.
   - `press/`: its press kit (fact sheet, description, screenshots, the video, contact).
   - `shots/loop.mp4`, `loop.webm`: the hero's silent video, made by `tools/site-video.js` in the
     game's repo (`node tools/site-video.js OUT_DIR`); `share.png` is the 1200x630 link preview.
-  - `demo/`: the free demo, when it's up (see below). Never edit it by hand.
+  - `demo/`: the free demo, when it's up (see below): the game to play in the browser, and
+    `fatal-exception-demo.zip`, the same to download and play offline. Never edit it by hand.
 - `robots.txt`, `sitemap.xml`: add a line to the sitemap for each new page.
 - `img/`: the other games' card pictures, cropped from their title screens.
 
@@ -21,8 +21,9 @@ they're served at `secondreading.games/<repo-name>/`.
 
 One click: the Actions tab, **Publish the demo**, **Run workflow**. It builds the demo from the
 game's repo (`main`, or whichever branch or tag you give it), puts it at
-`secondreading.games/fatal-exception/demo/`, and turns the "Free demo coming soon" buttons on
-both pages into "Play the free demo". Run it again to update the demo; choose **take down** to
+`secondreading.games/fatal-exception/demo/` with its zip beside it (to download and play
+offline), turns the "Free demo coming soon" buttons on both pages into "Play the free demo",
+and shows the download link under them. Run it again to update the demo; choose **take down** to
 remove it and put the buttons back.
 
 Set up once: the game's repo is private, so the action needs leave to read it.
