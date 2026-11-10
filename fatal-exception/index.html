@@ -139,6 +139,25 @@
       <a class="btn soon" data-demo href="#get" aria-disabled="true">Free demo coming soon</a>
       <a class="btn soon" href="#get" aria-disabled="true">Coming soon to itch.io</a>
     </p>
+    <!-- The sign-up: each address is emailed to hello@secondreading.games by FormSubmit (formsubmit.co),
+         a form-to-email relay; there's no list anywhere but that inbox. The script at the foot of the
+         page checks the address and sends it without leaving the page; without scripts it posts as
+         an ordinary form and comes back to #signed-up. -->
+    <form class="signup" id="signup" action="https://formsubmit.co/hello@secondreading.games" method="POST" novalidate>
+      <label for="signup-email">Want to know when it's out?</label>
+      <div class="signup-row">
+        <input type="email" id="signup-email" name="email" required autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" aria-describedby="signup-msg signup-note">
+        <button class="btn" type="submit">Tell me</button>
+      </div>
+      <input type="hidden" name="_subject" value="Fatal Exception sign-up">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://secondreading.games/fatal-exception/#signed-up">
+      <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="signup-msg" id="signup-msg" role="status" aria-live="polite"></p>
+      <p class="small" id="signup-note">One email when the demo's out, one when the full game is. Nothing else.</p>
+    </form>
+    <p class="signed-up" id="signed-up">You're on the list. Thanks!</p>
     <p class="small">Contains flashing lights, with a warning and a reduced-motion option.</p>
   </div>
 </section>
@@ -155,6 +174,44 @@
 // Anyone who's asked for less motion gets the title screen, and a play button.
 (function(){ var v = document.getElementById('loop');
   if(v && matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); v.pause(); v.controls = true; } })();
+
+// The sign-up: check the address, then send it without leaving the page.
+(function(){
+  var form = document.getElementById('signup'); if(!form || !window.fetch) return;
+  var box = document.getElementById('signup-email'), msg = document.getElementById('signup-msg'), btn = form.querySelector('button');
+  // Slips worth catching before they go: a mistyped ending or a well-known domain a letter out.
+  var ENDS = {con:'com', cmo:'com', ocm:'com', vom:'com', comm:'com', coma:'com', 'co.k':'co.uk', 'co,uk':'co.uk', couk:'co.uk', nte:'net', ent:'net', ogr:'org'};
+  var DOMAINS = {'gamil.com':'gmail.com', 'gmial.com':'gmail.com', 'gmai.com':'gmail.com', 'gmail.co':'gmail.com', 'gnail.com':'gmail.com', 'googlemail.co':'googlemail.com',
+    'hotmial.com':'hotmail.com', 'hotmai.com':'hotmail.com', 'hotmail.co':'hotmail.com', 'outlok.com':'outlook.com', 'outloo.com':'outlook.com',
+    'yaho.com':'yahoo.com', 'yahooo.com':'yahoo.com', 'icloud.co':'icloud.com', 'iclod.com':'icloud.com'};
+  function say(text, bad){ msg.textContent = text; msg.className = 'signup-msg' + (bad ? ' bad' : ''); box.setAttribute('aria-invalid', bad ? 'true' : 'false'); }
+  // What's wrong with it, or '' if it looks like an address. (Only its owner can prove it's real.)
+  function wrong(v){
+    if(!v) return 'Type your email address first.';
+    if(/\s/.test(v)) return "There's a space in that.";
+    if(v.split('@').length !== 2) return 'That needs one @ in it, like you@example.com.';
+    var name = v.split('@')[0], dom = v.split('@')[1];
+    if(!name) return "There's nothing before the @.";
+    if(!/^[a-z0-9.!#$%&'*+\/=?^_`{|}~-]+$/i.test(name) || /^\.|\.$|\.\./.test(name)) return "The part before the @ doesn't look right.";
+    if(!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/i.test(dom) || /(^|\.)-|-(\.|$)/.test(dom) || !/\.[a-z]{2,}$/i.test(dom)) return "The part after the @ doesn't look right: it should end like example.com.";
+    if(DOMAINS[dom]) return 'Did you mean ' + name + '@' + DOMAINS[dom] + '?';
+    for(var e in ENDS) if(dom.slice(-e.length - 1) === '.' + e) return 'Did you mean ' + name + '@' + dom.slice(0, -e.length) + ENDS[e] + '?';
+    return '';
+  }
+  box.addEventListener('input', function(){ if(msg.className.indexOf('bad') >= 0) say(''); });
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var v = box.value.trim().toLowerCase(), w = wrong(v);
+    if(w){ say(w, true); box.focus(); return; }
+    if(form.elements._honey.value) return say("You're on the list. Thanks!");      // a robot: say nothing's wrong, send nothing
+    box.value = v; btn.disabled = true; say('Sending...');
+    fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {method: 'POST', headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({email: v, _subject: form.elements._subject.value, _template: 'table', _captcha: 'false'})})
+      .then(function(r){ return r.json().then(function(j){ if(!r.ok || String(j.success) !== 'true') throw new Error(j.message || r.status); }); })
+      .then(function(){ form.hidden = true; var done = document.getElementById('signed-up'); done.className = 'signed-up show'; done.setAttribute('role', 'status'); })
+      .catch(function(){ btn.disabled = false; say("That didn't send. Try again in a moment, or email hello@secondreading.games.", true); });
+  });
+})();
 </script>
 
 </body>

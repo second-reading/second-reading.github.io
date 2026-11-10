@@ -120,3 +120,19 @@ section{padding:64px 0}
 .kit .gallery{margin-top:8px}
 .kit ul{padding-left:22px;margin:0 0 16px}
 @media (max-width:560px){ .kit dl{grid-template-columns:1fr;gap:0} .kit dd{margin:0 0 10px} }
+
+/* The sign-up. */
+.signup{margin:36px auto 28px;max-width:560px}
+.signup label{display:block;font-family:'Press Start 2P',monospace;font-size:13px;line-height:1.5;margin:0 0 14px}
+.signup-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.signup input[type=email]{flex:1 1 260px;min-width:0;font:24px/1.2 'VT323',ui-monospace,monospace;padding:10px 12px;color:#000;background:var(--white);
+  border:2px solid #000;box-shadow:4px 4px 0 rgba(0,0,0,.45);border-radius:0}
+.signup input[type=email]:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+.signup input[aria-invalid=true]{border-color:#e0284a}
+.signup button{cursor:pointer}
+.signup button:disabled{opacity:.6;cursor:default}
+.signup-msg{min-height:1.35em;margin:14px 0 6px}
+.signup-msg.bad{color:#ffd23c}
+.signup .honey{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.signed-up{display:none;font-family:'Press Start 2P',monospace;font-size:14px;line-height:1.6;color:#ffd23c;margin:36px 0 28px}
+.signed-up:target,.signed-up.show{display:block}
