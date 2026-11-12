@@ -7,8 +7,11 @@ domain). Plain HTML and CSS, no build step.
 - `fatal-exception/`: Fatal Exception's promo page, edited here (it used to be `site/` in the
   game's repo). Keep the link back to the front page and the absolute `og:` addresses.
   - `press/`: its press kit (fact sheet, description, screenshots, the video, contact).
-  - `shots/loop.mp4`, `loop.webm`: the hero's silent video, made by `tools/site-video.js` in the
-    game's repo (`node tools/site-video.js OUT_DIR`); `share.png` is the 1200x630 link preview.
+  - `shots/`: the screenshots, taken from the game by `node tools/site-shots.js GAME_REPO`, and
+    `loop.mp4`, `loop.webm`, the hero's silent video, by `node tools/site-video.js GAME_REPO`
+    (needs ffmpeg; stage 1 is flown by the game's bot, `tools/bot/brain.js`, at expert skill, so
+    it dodges rather than flying through things). GAME_REPO is a checkout of the game; both
+    write straight into `shots/`. `share.png` is the 1200x630 link preview.
   - `demo/`: the free demo, when it's up (see below): the game to play in the browser, and
     `fatal-exception-demo.zip`, the same to download and play offline. Never edit it by hand.
 - `robots.txt`, `sitemap.xml`: add a line to the sitemap for each new page.
