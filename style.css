@@ -123,3 +123,4 @@ figcaption{font:400 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--dim);m
 .policy .aside{margin:0 0 8px}
 .policy a{color:var(--pen);text-underline-offset:3px}
 .policy a:hover{color:var(--page)}
+picture{display:block}
