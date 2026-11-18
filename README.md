@@ -11,10 +11,7 @@ domain). Plain HTML and CSS, no build step.
     `loop.mp4`, `loop.webm`, the hero's silent video, by `node tools/site-video.js GAME_REPO`
     (needs ffmpeg; stage 1 is flown by the game's bot, `tools/bot/brain.js`, at expert skill, so
     it dodges rather than flying through things). GAME_REPO is a checkout of the game; both
-    write straight into `shots/`. The game screenshots on the page are short GIF loops,
-    made by `node tools/site-gifs.js GAME_REPO` (needs ffmpeg and gifsicle); their PNG stills are
-    shown instead with reduced motion, and are what the press kit links to. `share.png` is the
-    1200x630 link preview.
+    write straight into `shots/`. `share.png` is the 1200x630 link preview.
   - `demo/`: the free demo, when it's up (see below): the game to play in the browser, and
     `fatal-exception-demo.zip`, the same to download and play offline. Never edit it by hand.
 - `robots.txt`, `sitemap.xml`: add a line to the sitemap for each new page.

@@ -136,4 +136,3 @@ section{padding:64px 0}
 .signup .honey{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .signed-up{display:none;font-family:'Press Start 2P',monospace;font-size:14px;line-height:1.6;color:#ffd23c;margin:36px 0 28px}
 .signed-up:target,.signed-up.show{display:block}
-picture{display:block}
