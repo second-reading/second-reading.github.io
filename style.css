@@ -37,6 +37,19 @@ p{margin:0 0 14px}
 .intro mark{color:var(--ink);background:linear-gradient(100deg,transparent .08em,var(--pen) .12em,var(--pen) calc(100% - .1em),transparent calc(100% - .04em)) 0 58%/100% 62% no-repeat;
   padding:0 .06em;margin:0 -.06em}
 .blurb{max-width:34em;margin:40px 0 0 auto;padding-left:24px;border-left:1px solid var(--pen)}
+/* It rolls out: each word rises into place in turn, then the highlighter goes over "played",
+   left to right, and the blurb comes in under it. Still, with reduced motion. */
+.roll .w{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em .04em .16em;margin:-.12em -.04em -.16em}
+.roll .w>span{display:inline-block;transform:translateY(115%) rotate(7deg);transform-origin:0 100%;
+  animation:roll .8s cubic-bezier(.2,.75,.2,1) calc(var(--i) * 110ms + 150ms) forwards}
+.intro mark{color:var(--page);background-size:0 62%;animation:pen .45s cubic-bezier(.5,0,.3,1) 1.05s forwards}
+.intro .blurb{opacity:0;transform:translateY(12px);animation:roll .7s ease-out 1.35s forwards}
+@keyframes roll{to{opacity:1;transform:none}}
+@keyframes pen{50%{color:var(--page)}to{color:var(--ink);background-size:100% 62%}}
+@media (prefers-reduced-motion: reduce){
+  .roll .w>span,.intro mark,.intro .blurb{animation:none;transform:none;opacity:1}
+  .intro mark{color:var(--ink);background-size:100% 62%}
+}
 .blurb p:last-child{color:var(--dim);margin:0}
 
 /* Section labels, in the mono. */
@@ -93,7 +106,7 @@ figcaption{font:400 11px/1.4 var(--mono);letter-spacing:.06em;color:var(--dim);m
 
 /* "played" is a button: it opens a game of breakout (play.js). */
 .play-mark{font:inherit;color:inherit;letter-spacing:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer}
-.play-mark:hover{text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.1em}
+.play-mark:hover,.play-mark:hover .w>span{text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.1em}
 .play-mark:focus-visible{outline:2px solid var(--page);outline-offset:4px}
 .breakout{position:fixed;inset:0;z-index:100;background:var(--green);cursor:none;touch-action:none}
 .breakout canvas{display:block}
